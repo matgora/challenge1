@@ -2,6 +2,14 @@ package com.example.mapactivity;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +23,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+    //accelerometer
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private SensorEventListener accelerometerListener;
+
+
+    //location
+
+    private LocationManager locationManager;
+
+    private LocationListener locationListener;
+
+
+   
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +51,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
+
+
+
     }
 
 
@@ -39,15 +73,69 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34.1, 151.1);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        LatLng sydney2 = new LatLng(-34.1, 151.12);
 
-        mMap.addMarker(new MarkerOptions().position(sydney2).title("Marker in Sydney"));
+        accelerometerListener = createAccelerometerListener();
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        locationListener = createLocationListener();
+
     }
+
+
+    private SensorEventListener createAccelerometerListener(){
+
+        return new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        };
+
+    }
+
+
+    private LocationListener createLocationListener(){
+
+        return new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+
+
+
+
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+    }
+
+
 }
